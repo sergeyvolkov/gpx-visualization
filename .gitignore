@@ -1,0 +1,12 @@
+.idea
+nbproject
+/application/configs/app.*.php
+!/application/configs/app.*.sample.php
+/data/
+!/data/locale
+/data/locale/default.mo
+/public/.htaccess
+!.stub
+composer.lock
+composer.phar
+/vendor/*

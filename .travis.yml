@@ -1,0 +1,30 @@
+language: php
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+before_script:
+  # ImageMagick
+  - printf "\n" | pecl install imagick
+  # Composer
+  - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
+  - composer self-update
+  - composer update --prefer-source
+  # Database
+  - mysql -e 'CREATE DATABASE bluz;'
+  - mysql -uroot bluz < structure.ddl
+  - mysql -uroot bluz < dump.sql
+  - mysql -uroot bluz < tests/dump.sql
+script:
+  - mkdir .reports
+  # Code style
+  - php vendor/bin/phpcs ./application --standard=PSR1 --encoding=utf-8 --ignore=./application/_loader.php
+  - php vendor/bin/phpcs ./application --standard=PSR2 --encoding=utf-8 --ignore=./application/_loader.php
+  # PHPUnit tests
+  - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml
+after_script:
+  - php vendor/bin/coveralls -v
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover .reports/clover.xml
+notifications:
+  email: false
