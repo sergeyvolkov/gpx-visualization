@@ -40,7 +40,7 @@ class Track {
     protected function validateFile()
     {
         return (in_array($this->file->getExtension(), Track::getAllowedExtensions()))
-                    && ($this->file->getSize() > Track::MAX_TRACK_SIZE);
+                    && ($this->file->getSize() < Track::MAX_TRACK_SIZE);
     }
 
     public function save()
