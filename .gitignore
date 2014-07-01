@@ -10,3 +10,6 @@ nbproject
 composer.lock
 composer.phar
 /vendor/*
+
+/public/uploads/tracks/*
+!/public/uploads/tracks/.keep
