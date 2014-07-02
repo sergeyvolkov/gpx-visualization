@@ -20,6 +20,7 @@ return function () {
         try {
             $track = new Track\Track($file);
             $track->save();
+            $data = $track->parse();
 
             $this->getMessages()->addSuccess('File has been successfully uploaded');
         } catch (Track\Exception $ex) {

@@ -17,6 +17,9 @@ class Track {
     const ALLOWED_EXTENSIONS_GPX = 'gpx';
 
     protected $file;
+    protected $path;
+
+    protected $data;
 
     /**
      * @param \Bluz\Http\File $file
@@ -34,7 +37,6 @@ class Track {
     }
 
     /**
-     * @param \Bluz\Http\File $file
      * @return bool
      */
     protected function validateFile()
@@ -52,12 +54,43 @@ class Track {
         try {
             $fileName = date('Ymd') . '-' . app()->user()->id . '-' . uniqid();
             $filePath = realpath(self::PATH_TO_TRACKS);
+            $this->path = $filePath . DIRECTORY_SEPARATOR . $fileName . '.' . $this->file->getExtension();
 
             $this->file->setName($fileName);
             $this->file->moveTo($filePath);
         } catch (Exception $ex) {
             throw new Exception('Error during file upload');
         }
+    }
+
+    public function parse()
+    {
+        $data = simplexml_load_file($this->path);
+        $result = [];
+
+        $result['info'] = [
+            'userId'    =>  (int)app()->user()->id,
+            'creator'   =>  (string)$data['creator'],
+            'time'      =>  (string)$data->{'metadata'}->{'time'},
+            'hash'      =>  md5_file($this->path),
+        ];
+
+        $points = (array)$data->{'trk'}->{'trkseg'};
+        $points = $points['trkpt'];
+
+        foreach ($points as $point) {
+            /**
+             * @var \SimpleXMLElement $point
+             */
+            $result['points'] = [
+                'latitude'  =>  (float)$point['lat'],
+                'longitude' =>  (float)$point['lon'],
+                'altitude'  =>  (float)$point->ele,
+                'datetime'  =>  (string)$point->time,
+            ];
+        }
+
+        return $result;
     }
 
 }
