@@ -6,6 +6,9 @@
 
 namespace Application;
 
+/**
+ * @privilege ViewTracks
+ */
 return function () {
     /**
      * @var Bootstrap $this

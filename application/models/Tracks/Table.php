@@ -54,7 +54,8 @@ class Table extends \Bluz\Db\Table
     {
         $select = new Select();
         $select->select(
-            'p.id',
+            'p.id as point_id',
+            't.id as track_id',
             'p.latitude',
             'p.longitude',
             'p.altitude',
@@ -64,6 +65,12 @@ class Table extends \Bluz\Db\Table
             ->join('p', 'tracks', 't', 'p.trackId = t.id')
             ->where('t.userId = ?', $userId);
 
-        return $select->execute();
+        $result = [];
+        $points = $select->execute();
+        array_map(function($data) use (&$result) {
+            $result[$data['track_id']][] = $data;
+        }, $points);
+
+        return $result;
     }
 }

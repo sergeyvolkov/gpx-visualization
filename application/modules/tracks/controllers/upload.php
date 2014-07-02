@@ -8,6 +8,9 @@ namespace Application;
 
 use Track;
 
+/**
+ * @privilege UploadTrack
+ */
 return function () {
     /**
      * @var Bootstrap $this

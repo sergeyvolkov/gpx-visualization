@@ -21,25 +21,33 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false'], function(){
             if ('success' !== response.status) {
                 return false;
             }
+            $.each(response.routes, function() {
+                var pointsCollection = this,
+                    points = [],
+                    poly;
 
-            $.each(response.points, function() {
-                var lat = this.latitude,
-                    lon = this.longitude,
-                    p = new google.maps.LatLng(lat, lon);
-                points.push(p);
-                bounds.extend(p);
+                $.each(pointsCollection, function() {
+                    var lat = this.latitude,
+                        lon = this.longitude,
+                        p = new google.maps.LatLng(lat, lon);
+                    points.push(p);
+                    bounds.extend(p);
+                });
+
+                poly = new google.maps.Polyline({
+                    // use your own style here
+                    path: points,
+//                    strokeColor: "#"+((1<<24)*Math.random()|0).toString(16), // random color
+                    strokeColor: "#fff",
+                    strokeOpacity: 1,
+                    strokeWeight: 3
+                });
+
+                poly.setMap(map);
+                map.fitBounds(bounds);
+
             });
 
-            var poly = new google.maps.Polyline({
-                // use your own style here
-                path: points,
-                strokeColor: "#FF00AA",
-                strokeOpacity: .7,
-                strokeWeight: 4
-            });
-
-            poly.setMap(map);
-            map.fitBounds(bounds);
         }
     });
 });

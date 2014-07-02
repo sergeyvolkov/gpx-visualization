@@ -22,7 +22,7 @@ return function () {
         throw new \Exception('Page not found', 404);
     }
 
-    $points = Tracks\Table::getInstance()->getAllPoints($userId);
+    $routes = Tracks\Table::getInstance()->getAllPoints($userId);
 
-    return ['status' => 'success', 'points' => $points];
+    return ['status' => 'success', 'routes' => $routes];
 };
