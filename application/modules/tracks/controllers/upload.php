@@ -14,15 +14,17 @@ return function () {
      */
 
     $fileUpload = $this->getRequest()->getFileUpload();
-    $file = $fileUpload->getFile('file');
+    $files = $fileUpload->getFiles('files');
 
-    if ($file) {
+    foreach ($files as $file) {
         try {
             $track = new Track\Track($file);
             $track->save();
             $data = $track->parse();
 
             Tracks\Table::getInstance()->saveFileContent($data);
+
+            $track->destroy();
 
             $this->getMessages()->addSuccess('File has been successfully uploaded');
         } catch (Track\Exception $ex) {

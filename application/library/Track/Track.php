@@ -93,4 +93,11 @@ class Track {
         return $result;
     }
 
+    public function destroy()
+    {
+        $this->file = null;
+        $this->path = '';
+        $this->data = [];
+    }
+
 }
