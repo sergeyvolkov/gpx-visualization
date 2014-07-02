@@ -2,9 +2,12 @@
 nbproject
 /application/configs/app.*.php
 !/application/configs/app.*.sample.php
-/data/
-!/data/locale
+/data/*
+/data/*/*
+!/data/*/
+!/data/*/.keep
 /data/locale/default.mo
+
 /public/.htaccess
 !.stub
 composer.lock
