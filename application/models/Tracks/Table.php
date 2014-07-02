@@ -10,6 +10,7 @@
 namespace Application\Tracks;
 
 use Application\Points;
+use Bluz\Db\Query\Select;
 
 class Table extends \Bluz\Db\Table
 {
@@ -47,5 +48,22 @@ class Table extends \Bluz\Db\Table
             $handler->rollBack();
         }
 
+    }
+
+    public function getAllPoints($userId)
+    {
+        $select = new Select();
+        $select->select(
+            'p.id',
+            'p.latitude',
+            'p.longitude',
+            'p.altitude',
+            'p.datetime'
+        )
+            ->from('points', 'p')
+            ->join('p', 'tracks', 't', 'p.trackId = t.id')
+            ->where('t.userId = ?', $userId);
+
+        return $select->execute();
     }
 }

@@ -1,2 +1,13 @@
-<?php /** @var \Bluz\View\View $this */ ?>
-<?= $this->ahref('Upload a new track', ['tracks', 'upload']) ?>
+<?php
+/**
+ * @var \Bluz\View\View $this
+ */
+$this->headStyle('./css/modules/tracks/index.css');
+$this->headScript('./js/modules/tracks/index.js');
+?>
+<?= $this->ahref('Upload a new track', ['tracks', 'upload']) ?> <br>
+
+All routes: <br>
+<div id="map-canvas">
+
+</div>
