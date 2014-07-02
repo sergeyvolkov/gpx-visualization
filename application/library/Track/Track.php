@@ -82,7 +82,7 @@ class Track {
             /**
              * @var \SimpleXMLElement $point
              */
-            $result['points'] = [
+            $result['points'][] = [
                 'latitude'  =>  (float)$point['lat'],
                 'longitude' =>  (float)$point['lon'],
                 'altitude'  =>  (float)$point->ele,

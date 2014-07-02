@@ -22,6 +22,8 @@ return function () {
             $track->save();
             $data = $track->parse();
 
+            Tracks\Table::getInstance()->saveFileContent($data);
+
             $this->getMessages()->addSuccess('File has been successfully uploaded');
         } catch (Track\Exception $ex) {
             $this->getMessages()->addError('Error has been occurred');
