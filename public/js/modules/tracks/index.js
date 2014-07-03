@@ -1,5 +1,5 @@
-require(['async!http://maps.google.com/maps/api/js?sensor=false'], function(){
-    var mapCanvas = $('#map-canvas')[0],
+require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI'], function(){
+    var $mapCanvas = $('#map-canvas'),
         mapOptions = {},
         map;
 
@@ -8,23 +8,30 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false'], function(){
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
-    map = new google.maps.Map(mapCanvas, mapOptions);
+    map = new google.maps.Map($mapCanvas[0], mapOptions);
 
     $.ajax({
         type: "GET",
         url: "/api/all-routes",
         dataType: "json",
+        beforeSend: function() {
+            $mapCanvas.block({
+                message: '<h1><img src="/img/ajax-loader.gif"></h1><h1>Downloading tracks...</h1>',
+                css: {border: 'none', textAlign: 'center', opacity: '0.5'}
+            });
+        },
         success: function(response) {
-            var points = [],
-                bounds = new google.maps.LatLngBounds ();
+            $mapCanvas.unblock();
 
             if ('success' !== response.status) {
                 return false;
             }
+
             $.each(response.routes, function() {
                 var pointsCollection = this,
                     points = [],
-                    poly;
+                    poly,
+                    bounds = new google.maps.LatLngBounds();
 
                 $.each(pointsCollection, function() {
                     var lat = this.latitude,
@@ -47,6 +54,8 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false'], function(){
                 map.fitBounds(bounds);
 
             });
+
+            return true;
 
         }
     });

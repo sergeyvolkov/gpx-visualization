@@ -16,7 +16,8 @@ require.config({
         // cdnjs settings
         underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min',
         backbone: '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min',
-        async: './vendor/async'
+        async: './vendor/async',
+        blockUI: '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI'
     },
     shim: {
         bootstrap: {
@@ -37,6 +38,9 @@ require.config({
         "jquery-ui": {
             deps: ['jquery'],
             exports: '$.ui'
+        },
+        blockUI: {
+            deps: ['jquery']
         }
     },
     enforceDefine: true
