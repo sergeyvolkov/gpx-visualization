@@ -17,7 +17,8 @@ require.config({
         underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min',
         backbone: '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min',
         async: './vendor/async',
-        blockUI: '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI'
+        blockUI: '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI',
+        fullScreen: './vendor/jquery.fullscreen'
     },
     shim: {
         bootstrap: {
@@ -41,6 +42,10 @@ require.config({
         },
         blockUI: {
             deps: ['jquery']
+        },
+        fullScreen: {
+            deps: ['jquery'],
+            exports: '$.fn.fullScreen'
         }
     },
     enforceDefine: true

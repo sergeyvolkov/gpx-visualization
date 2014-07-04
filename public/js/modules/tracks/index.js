@@ -1,4 +1,4 @@
-require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI'], function(){
+require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI', 'fullScreen'], function(){
     var $mapCanvas = $('#map-canvas'),
         mapOptions = {},
         map;
@@ -56,6 +56,12 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI'], fu
 
         }
 
+    });
+
+    // added size-switcher
+    $mapCanvas.append('<div id="size-switcher" class="fa fa-arrows"></div>');
+    $('body').on('click', '#size-switcher', function() {
+        $mapCanvas.toggleFullScreen();
     });
 
     // save updated center to localStorage
