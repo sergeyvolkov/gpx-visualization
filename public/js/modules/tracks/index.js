@@ -3,11 +3,8 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI'], fu
         mapOptions = {},
         map;
 
-    mapOptions = {
-        center: new google.maps.LatLng(50, 36),
-        zoom: 12,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-    };
+    mapOptions = getMapsOptions();
+
     map = new google.maps.Map($mapCanvas[0], mapOptions);
 
     $.ajax({
@@ -58,5 +55,58 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI'], fu
             return true;
 
         }
+
     });
+
+    // save updated center to localStorage
+    google.maps.event.addListener(map, 'dragend', function() {
+        var mapCenter = [];
+
+        mapCenter = map.getCenter();
+        localStorage.setItem('mapCenter', JSON.stringify(mapCenter));
+    });
+    // save updated zoom to localStorage
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        var zoom = 0;
+
+        zoom = map.getZoom();
+        localStorage.setItem('mapZoom', zoom);
+    });
+    // save updated map type
+    google.maps.event.addListener(map, 'maptypeid_changed', function() {
+        var mapTypeId = '';
+
+        mapTypeId = map.getMapTypeId();
+        localStorage.setItem('mapTypeId', mapTypeId);
+    } );
+
+    function getMapsOptions()
+    {
+        var mapOptions = {},
+            defaultCoordinates = [50.006067,36.228932],
+            defaultZoom = 12,
+            defaultTypeId = google.maps.MapTypeId.HYBRID,
+            coordinates,
+            zoom,
+            typeId;
+
+        if (localStorage.getItem('mapCenter')) {
+            coordinates = JSON.parse(localStorage.getItem('mapCenter'));
+            coordinates = [coordinates['k'], coordinates['B']];
+        } else {
+            coordinates = defaultCoordinates;
+        }
+
+        zoom = localStorage.getItem('mapZoom') ? localStorage.getItem('mapZoom') : defaultZoom;
+        typeId = localStorage.getItem('mapTypeId') ? localStorage.getItem('mapTypeId') : defaultTypeId;
+
+        mapOptions = {
+            center:     new google.maps.LatLng(coordinates[0], coordinates[1]),
+            zoom:       parseInt(zoom),
+            mapTypeId:  typeId
+        };
+
+        return mapOptions;
+    }
+
 });
