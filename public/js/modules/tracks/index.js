@@ -107,9 +107,10 @@ require(['async!http://maps.google.com/maps/api/js?sensor=false', 'blockUI', 'fu
         typeId = localStorage.getItem('mapTypeId') ? localStorage.getItem('mapTypeId') : defaultTypeId;
 
         mapOptions = {
-            center:     new google.maps.LatLng(coordinates[0], coordinates[1]),
-            zoom:       parseInt(zoom),
-            mapTypeId:  typeId
+            center:             new google.maps.LatLng(coordinates[0], coordinates[1]),
+            zoom:               parseInt(zoom),
+            mapTypeId:          typeId,
+            streetViewControl:  false
         };
 
         return mapOptions;
