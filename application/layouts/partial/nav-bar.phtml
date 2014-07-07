@@ -17,9 +17,8 @@
                         <?=$this->ahref('Dashboard', $this->url('dashboard', 'index', [], true))?>
                     </li>
                     <li <?=($this->module('tracks')?'class="active"':'')?>><?=$this->ahref('Tracks', ['tracks', 'index'])?></li>
-                    <li>
-                        <?=$this->ahref('About', 'about.html') ?>
-                    </li>
+                    <li><?=$this->ahref('About', 'about.html') ?></li>
+                    <li <?=($this->module('info')?'class="active"':'')?>><?=$this->ahref('Developers notes', ['info', 'index'])?></li>
                 </ul>
                 <?php if ($identity = $this->user()) : ?>
                     <p class="navbar-text navbar-right">
