@@ -14,9 +14,11 @@ namespace Application;
 
 return
 /**
- * @var Bootstrap $this
  * @return void
  */
 function () {
-
+    /**
+     * @var Bootstrap $this
+     */
+    $this->redirectTo('tracks', 'index');
 };
