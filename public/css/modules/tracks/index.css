@@ -17,3 +17,8 @@
     opacity: 1;
     cursor: pointer;
 }
+
+#map-canvas:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+}
