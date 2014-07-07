@@ -7,11 +7,20 @@ $this->headStyle('css/modules/info/index.css');
 ?>
 <h3>Commits history:</h3>
 <table class="table table-bordered table-centered">
+    <thead>
+    <tr>
+        <th>Tag</th>
+        <th>Hash</th>
+        <th>Commit</th>
+    </tr>
+    </thead>
+    <tbody>
     <?php foreach ($history as $tag => $info): ?>
         <tr>
             <td rowspan="<?= $info['count'] + 1; ?>"><?= $tag; ?></td>
             <td><?= $info['commits'][0][0];?></td>
             <td><?= $info['commits'][0][1];?></td>
+        </tr>
         <?php foreach ($info['commits'] as $commit): ?>
             <tr>
                 <?php if ($commit == reset($info['commits'])) {continue;} ?>
@@ -19,6 +28,6 @@ $this->headStyle('css/modules/info/index.css');
                 <td><?= $commit[1] ?></td>
             </tr>
         <?php endforeach; ?>
-        </tr>
     <?php endforeach; ?>
+    </tbody>
 </table>
