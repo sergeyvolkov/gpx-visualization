@@ -1,0 +1,24 @@
+<?php
+/**
+ * @var \Bluz\View\View $this
+ */
+$history = $this->history;
+$this->headStyle('css/modules/info/index.css');
+?>
+<h3>Commits history:</h3>
+<table class="table table-bordered table-centered">
+    <?php foreach ($history as $tag => $info): ?>
+        <tr>
+            <td rowspan="<?= $info['count'] + 1; ?>"><?= $tag; ?></td>
+            <td><?= $info['commits'][0][0];?></td>
+            <td><?= $info['commits'][0][1];?></td>
+        <?php foreach ($info['commits'] as $commit): ?>
+            <tr>
+                <?php if ($commit == reset($info['commits'])) {continue;} ?>
+                <td><?= $commit[0] ?></td>
+                <td><?= $commit[1] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+</table>
