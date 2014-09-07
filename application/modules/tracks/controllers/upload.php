@@ -30,6 +30,7 @@ return function () {
             $track->destroy();
 
             $this->getMessages()->addSuccess('File has been successfully uploaded');
+            $this->redirectTo('tracks', 'index');
         } catch (Track\Exception $ex) {
             $this->getMessages()->addError('Error has been occurred');
             $this->getMessages()->addError($ex->getMessage());
